@@ -64,16 +64,44 @@ struct ContentView: View {
                             }
                         }
                     }
-                    Button("BoxBlur"){
+                    Button("Noir"){
                         if let inputImage = selectedImage{
                             let beginImage = CIImage(image: inputImage)
-                            let currentFilter = CIFilter.boxBlur()
+                            let currentFilter = CIFilter.photoEffectNoir()
                             currentFilter.inputImage = beginImage
-                            currentFilter.radius = 40
                             
                             guard let outputImage = currentFilter.outputImage else { return }
                             if let cgImage = context.createCGImage(outputImage, from:outputImage.extent){
                                 let uiImage = UIImage(cgImage: cgImage)
+                                self.selectedImage = uiImage
+                            }
+                        }
+                    }
+                    Button("Thermal"){
+                        if let inputImage = selectedImage{
+                            let beginImage = CIImage(image: inputImage)
+                            let currentFilter = CIFilter.thermal()
+                            currentFilter.inputImage = beginImage
+                            guard let outputImage = currentFilter.outputImage else { return }
+                            if let cgImage = context.createCGImage(outputImage, from:outputImage.extent){
+                                let uiImage = UIImage(cgImage: cgImage)
+                                self.selectedImage = uiImage
+                            }
+                        }
+                    }
+                    Button("Halftone"){
+                        if let inputImage = selectedImage{
+                            let beginImage = CIImage(image: inputImage)
+                            let currentFilter = CIFilter.dotScreen()
+                            currentFilter.inputImage = beginImage
+                            guard let outputImage = currentFilter.outputImage else { return }
+                            if let cgImage = context.createCGImage(outputImage, from:outputImage.extent){
+                                let uiImage = UIImage(cgImage: cgImage)
+                                let inputAngle = 30
+                                let inputCenter = [20,30]
+                                let inputSharpness = 0.5
+                                let inputWidth = 0.5
+                                
                                 self.selectedImage = uiImage
                             }
                         }
